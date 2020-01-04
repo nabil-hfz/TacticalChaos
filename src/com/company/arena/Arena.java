@@ -53,8 +53,7 @@ public class Arena {
                     System.out.print("| [#####] |");
 
                 } else if (Square[i][j].getState() == State.Occupied) {
-                  //  System.err.println("ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRORRRRRRRRRRRRRRRR" + Square[i][j].getChampionsIn().size());
-                    for (Champion c : Square[i][j].getChampionsIn()) {
+                     for (Champion c : Square[i][j].getChampionsIn()) {
                         System.err.print("| [" + c.toInitials() + "P" + c.getPlayerId() + "] |");
                     }
 

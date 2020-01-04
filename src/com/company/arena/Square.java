@@ -1,6 +1,7 @@
 package com.company.arena;
 
 
+import com.company.Items.Item;
 import com.company.champion.Champion;
 import com.company.players.Player;
 
@@ -10,6 +11,7 @@ public class Square {
 
     private Integer x;
     private Integer y;
+    public Item item ;
 
     SquaresState state;
     ArrayList<Player> playersIn = new ArrayList<Player>();
