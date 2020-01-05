@@ -5,6 +5,7 @@ import com.company.arena.Arena;
 import com.company.arena.SquaresState;
 import com.company.champion.Champion;
 import com.company.champion.Champions;
+import com.company.move.ExecuteMove;
 import com.company.players.Player;
 import com.company.round.PlanningRound;
 import com.company.round.Round;
@@ -23,10 +24,11 @@ public class Game {
     private int mNumberOfPlayer;
     private Champions mChampions;
     private RoundManger mRoundManger;
+
     private StoreFilter mStoreFilter;
     private InGameStore mInGameStore;
     private final Game reference = this;
-    private List<Player> mCurrentPlayer;
+    private ArrayList<Player> mCurrentPlayer;
     private Round mPlanningRound = new PlanningRound();
     private int NumPlanningRound = 9;
     public static Arena arena;
@@ -115,11 +117,15 @@ public class Game {
     }
 
     private void setPlanningForEachPlayer() {
+        ArrayList<ArrayList<String>> plansOfTheRound = new ArrayList<ArrayList<String>>();
+        ArrayList<String> planForEachPlayer;
 
-        System.err.println("hello ppppppppppppppppppppppppppppppppp ");
+        //   System.err.println("hello ppppppppppppppppppppppppppppppppp ");
         for (Player player : mCurrentPlayer) {
+            planForEachPlayer = new ArrayList<String>();
             System.err.println("the player name is : " + player.getFirstName());
             for (Champion champion : player.getCurrentChampions()) {
+                String s = "";
                 int i = 0;
                 if (Utility.askForCompleteMission(champion.getChampionAttributes().getChampionName()))
                     while (i < 3) {
@@ -127,7 +133,7 @@ public class Game {
                         int choice = Utility.printPlanningListPhase2MovesList();
                         String moveAsString = "";
 
-                        System.err.println("hello ppppppppppppppppppppppppppppppppp iii " + i);
+                        //    System.err.println("hello ppppppppppppppppppppppppppppppppp iii " + i);
 
                         switch (choice) {
                             case 1:
@@ -140,7 +146,7 @@ public class Game {
 //                                int championToMove1;
 //                                championToMove1 = Utility.printAllAvailableChampionToMove(new ArrayList<>());
 //                                System.out.println(championToMove1);
-                                String s = "";
+
                                 s = champion.getChampionAttributes().getChampionName().substring(0, 3);
 
                                 System.out.println("Walking move must be running right now");
@@ -159,6 +165,7 @@ public class Game {
                         }
                         if (!Utility.askForCompleteMission(champion.getChampionAttributes().getChampionName()))
                             break;
+                        planForEachPlayer.add(s);
 
 
                     }
@@ -167,9 +174,71 @@ public class Game {
                 System.err.println();
                 System.err.println();
             }
+            plansOfTheRound.add(planForEachPlayer);
+
         }
+
+        arena.printAllChampionsInTheArena();
+
+        //********************************************************executing phase*******************************************************************\\
+        ArrayList<Player> tempPlayers = new ArrayList<Player>();
+
+
+        Player p = takeTurns(this.mCurrentPlayer, tempPlayers);
+
+        System.out.println("player to execute move" + p);
+        for (int j = 1; j <= this.mCurrentPlayer.size(); j++) {
+
+
+            ExecuteMove executeMove = new ExecuteMove();
+            executeMove.executeMove(plansOfTheRound.get(j - 1).get(j),
+                    arena,
+                    this.mCurrentPlayer.get(j - 1),
+                    this.mCurrentPlayer,
+                    1);
+
+
+        }
+
+
+//********************************************************end of executing phase*******************************************************************\\
+
     }
 
+
+    private Player takeTurns(ArrayList<Player> p, ArrayList<Player> tempPlayers) {
+
+        System.out.println("all players" + p);
+        System.out.println("temp players" + tempPlayers);
+
+        Player pl = getRandomPlayer(p);
+
+        if (tempPlayers.contains(pl)) {
+            System.out.println("contains");
+            takeTurns(p, tempPlayers);
+
+        } else {
+            System.out.println("all players in else" + p);
+            System.out.println("temp players in else" + tempPlayers);
+
+            System.err.println("player to add" + pl);
+
+
+            tempPlayers.add(pl);
+        }
+
+
+        return pl;
+
+    }
+
+    public Player getRandomPlayer(ArrayList<Player> items) {
+        this.IndexToDelete = new Random().nextInt(items.size());
+        Player p = items.get(this.IndexToDelete);
+        return p;
+    }
+
+    private int IndexToDelete = 0;
 
     public static abstract class RoundManger {
 

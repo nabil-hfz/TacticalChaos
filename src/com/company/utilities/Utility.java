@@ -316,6 +316,13 @@ public class Utility {
         System.out.println(object);
     }
 
+
+    public static int getRandom(int h, int l) {
+        return r.nextInt((h - l) + 1) + l;
+    }
+
+    private static Random r = new Random();
+
     public static int printPlanningListPhase2MovesList() {
 
 //        System.out.println("1- Sell champions.");

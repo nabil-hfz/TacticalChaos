@@ -1,5 +1,6 @@
 package com.company.champion;
 
+import com.company.Items.Item;
 import com.company.arena.Square;
 import com.company.champion.typeofchampion.OChampionAttributes;
 import com.company.damage.IDamageCalculator;
@@ -22,6 +23,7 @@ public class Champion {
     @SerializedName("ChampionAttributes")
     private OChampionAttributes oChampionAttributes;
     public int playerId;
+    public ArrayList<Item> items ;
 
     public Champion() {
         mMoves = new ArrayList<>();
