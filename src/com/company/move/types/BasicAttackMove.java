@@ -66,12 +66,12 @@ public class BasicAttackMove extends Move {
 
         int stX = Attacker.getCurrentSquare().getX() - Integer.parseInt(Attacker.getChampionAttributes().getAttackRange());
         if (stX < 0) stX = 0;
-        if (stX > 13) stX = 13;
+        if (stX > 25) stX = 25;
 
         int stY = Attacker.getCurrentSquare().getY() - Integer.parseInt(Attacker.getChampionAttributes().getAttackRange());
 
         if (stY < 0) stY = 0;
-        if (stY > 54) stY = 54;
+        if (stY > 25) stY = 25;
 
         for (int i = stX; i < stX + Integer.parseInt(Attacker.getChampionAttributes().getAttackRange()) * 2; i++) {
             for (int j = stY; j < stY + Integer.parseInt(Attacker.getChampionAttributes().getAttackRange()) * 2; j++) {
